@@ -1,3 +1,5 @@
+import "./demo.css";
+
 let scriptLoaded = false;
 
 function getQueryParams() {
