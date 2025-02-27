@@ -13,3 +13,35 @@
 | `pipIcon`      | No          | `true`        | Controls the Picture in Picture icon                                                                                                       |
 | `aspectratio`  | No          | `16:9`        | Maintains proportions when width is a percentage                                                                                           |
 | `playsinline`  | No          | `true`        | Support WebView                                                                                                                            |
+
+## Global functions
+
+### getCurrentTime()
+
+> Intended to return the viewer's current position in a media file. Values may vary depending on the type of media. See the table below for more information.
+
+| Media Type | Description                                                                                                                                     | Type   |
+| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| VOD        | The current playback position for a VOD file, in seconds                                                                                        | Number |
+| Live       | How long the current stream has been playing, in seconds, plus the amount of time seeked at start in order to achieve an initial target latency | Number |
+| DVR        | A negative value, indicating how far behind the viewer is from the stream's live position.1                                                     | Number |
+
+Example:
+
+```javascript
+window.getCurrentTime();
+```
+
+### seekTo()
+
+> Jump to the specified position within the currently playing item.
+
+| Attribute | Description                          | Type   | Required |
+| --------- | ------------------------------------ | ------ | -------- |
+| position  | The position (in seconds) to seek to | Number | Yes      |
+
+Example:
+
+```javascript
+window.seekTo(10);
+```
