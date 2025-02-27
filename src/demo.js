@@ -9,6 +9,20 @@ function getQueryParams() {
   return { licenseKey, videoUrl };
 }
 
+function publishGlobalFunction(player) {
+  if (!player) return;
+
+  window.getCurrentTime = () => {
+    return player.getPosition() || null;
+  };
+
+  window.seekTo = (time) => {
+    if (player.getState() !== "idle") {
+      player.seek(parseFloat(time));
+    }
+  };
+}
+
 function renderPlayer({ licenseKey, videoUrl }) {
   if (!licenseKey || !videoUrl) return;
 
@@ -19,7 +33,9 @@ function renderPlayer({ licenseKey, videoUrl }) {
       scriptLoaded = true;
 
       if (videoUrl) {
-        jwplayer("app").setup({ file: videoUrl });
+        const player = jwplayer("app").setup({ file: videoUrl });
+
+        publishGlobalFunction(player);
       }
     };
     script.onerror = function () {
@@ -28,7 +44,9 @@ function renderPlayer({ licenseKey, videoUrl }) {
     document.head.appendChild(script);
   } else if (licenseKey && scriptLoaded) {
     if (videoUrl) {
-      jwplayer("app").setup({ file: videoUrl });
+      const player = jwplayer("app").setup({ file: videoUrl });
+
+      publishGlobalFunction(player);
     }
   }
 }
